@@ -21,11 +21,15 @@ from django.urls import path
 
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.views import TokenRefreshView
+from rest_framework_swagger.views import get_swagger_view
 
+
+schema_view = get_swagger_view(title='Tasks API')
 
 urlpatterns = [
-    url(r'api/', include(('app.urls', 'api'), namespace='api')),
+    path('admin/', admin.site.urls),
     path('auth/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('auth/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('admin/', admin.site.urls),
+    url(r'api/', include(('app.urls', 'api'), namespace='api')),
+    url(r'^api-doc/$', schema_view),
 ]
