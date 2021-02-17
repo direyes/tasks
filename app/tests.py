@@ -98,6 +98,42 @@ class ApiTestCase(TestCase):
         self.assertEquals(task['description'], self.task.description)
         self.assertEquals(task['complete'], self.task.complete)
 
+    def test_task_list_looking_for_description(self):
+        """
+        test success task list looking for description
+        """
+
+        response = self.client.get(
+            '/api/tasks/?description={0}'.format(self.task.description),
+            format='json',
+        )
+
+        self.assertEquals(response.status_code, 200)
+
+        response_data = response.json()
+        self.assertIn('results', response_data)
+        self.assertEquals(response_data['count'], 1)
+        task = response_data['results'][0]
+        self.assertEquals(task['id'], self.task.id)
+        self.assertEquals(task['description'], self.task.description)
+        self.assertEquals(task['complete'], self.task.complete)
+
+    def test_task_list_looking_for_bad_description(self):
+        """
+        test success task list looking for bad description
+        """
+
+        response = self.client.get(
+            '/api/tasks/?search=bad-description',
+            format='json',
+        )
+
+        self.assertEquals(response.status_code, 200)
+
+        response_data = response.json()
+        self.assertIn('results', response_data)
+        self.assertEquals(response_data['count'], 0)
+
     def test_validations_at_update_task(self):
         """
         test to validate errors at update task

@@ -1,3 +1,4 @@
+from rest_framework import filters
 from rest_framework.viewsets import ModelViewSet
 
 from app.models import Task
@@ -5,6 +6,8 @@ from app.serializers import TaskSerializer
 
 
 class TaskViewSet(ModelViewSet):
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['description']
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
 
