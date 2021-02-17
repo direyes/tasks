@@ -21,3 +21,13 @@ Install using `pip`...
 
 # create a superuser
     python manage.py createsuperuser
+
+# Go to documentation API
+    Run the Django Aplication
+    python manage.py runserver
+
+    Important: You must be authenticated on Django admin
+    http://localhost:8000/admin/
+
+    and go to
+    http://localhost:8000/api-doc/
