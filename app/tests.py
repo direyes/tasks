@@ -123,6 +123,7 @@ class ApiTestCase(TestCase):
         description = 'test-description'
         data={
             'description': description,
+            'complete': True,
         }
         response = self.client.put(
             '/api/tasks/{0}/'.format(self.task.pk),
@@ -135,7 +136,7 @@ class ApiTestCase(TestCase):
 
         self.assertIn('id', response_data)
         self.assertEquals(response_data['description'], description)
-        self.assertFalse(response_data['complete'])
+        self.assertTrue(response_data['complete'])
 
     def test_delete_task_ok(self):
         """
