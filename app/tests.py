@@ -29,7 +29,7 @@ class ApiTestCase(TestCase):
             owner=self.user,
         )
 
-        self.client.login(username=username, password=password)
+        self.client.force_authenticate(self.user)
 
     def test_validations_at_create_task(self):
         """
@@ -218,4 +218,4 @@ class ApiTestCase(TestCase):
             format='json',
         )
 
-        self.assertEquals(response.status_code, 403)
+        self.assertEquals(response.status_code, 401)
