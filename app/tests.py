@@ -137,7 +137,7 @@ class ApiTestCase(TestCase):
         self.assertEquals(response_data['description'], description)
         self.assertFalse(response_data['complete'])
 
-    def test_update_task_ok(self):
+    def test_delete_task_ok(self):
         """
         test to validate errors at update task
         """
@@ -148,6 +148,26 @@ class ApiTestCase(TestCase):
         )
 
         self.assertEquals(response.status_code, 204)
+
+    def test_invalid_user_at_delete_task(self):
+        """
+        test to validate errors at update task
+        """
+
+        user_2 = G(
+            User,
+        )
+        task_2 = G(
+            Task,
+            owner=user_2,
+        )
+
+        response = self.client.delete(
+            '/api/tasks/{0}/'.format(task_2.pk),
+            format='json',
+        )
+
+        self.assertEquals(response.status_code, 404)
 
     def test_request_no_logged_user(self):
         """
